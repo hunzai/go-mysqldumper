@@ -22,14 +22,10 @@ func init() {
 }
 
 func main() {
-	// connect to the production DB
-	db, err := NewDB("mysql", "productionuser:productionpass@tcp(8.8.8.8:3306)/google1?timeout=5s")
-	if err != nil {
-		log.Fatal(err)
-	}
+	configFile := "../../config.json"
 
 	// read the config file
-	configData, err := ioutil.ReadFile("config.json")
+	configData, err := ioutil.ReadFile(configFile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -40,11 +36,22 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// connect to the production DB
+	dsn := config.Source.DSN
+	log.Info("Connecting on ", dsn)
+	db, err := NewDB("mysql", dsn)
+	if err != nil {
+		log.Fatal(err)
+	}
 	// create new dumper
 	dumper := mysqldumper.New(config, db, log.StandardLogger())
 
 	// create dump file
-	f, err := os.Create("db/dump.sql")
+	outputFile := config.Target.FilePath
+	if outputFile == "" {
+		log.Fatal("Output file name doesn't exists")
+	}
+	f, err := os.Create(outputFile)
 	if err != nil {
 		log.Fatal(err)
 	}

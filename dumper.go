@@ -83,7 +83,7 @@ func (s *Dumper) DumpDefinitions(w DumpWriter, tables *Tables) error {
 
 func (s *Dumper) DumpData(w DumpWriter, tables *Tables) error {
 	for _, table := range *tables {
-		if strings.Index(strings.ToLower(table.Type), "table") < 0 {
+		if strings.Index(strings.ToLower(table.Type), "table") < 0 || s.config.IsIgnor(table.Name) {
 			continue
 		}
 
