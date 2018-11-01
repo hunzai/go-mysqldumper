@@ -7,7 +7,7 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	mysqldumper "github.com/mlesar/go-mysqldumper"
+	mysqldumper "github.com/hunzai/go-mysqldumper"
 	log "github.com/sirupsen/logrus"
 )
 
