@@ -37,6 +37,12 @@ Values in the config are used in the following order:
 
 ```
 {
+    "source" :{
+        "dsn" : "user:password@tcp(127.0.0.1:port)/database?sql_mode=''"
+    },
+    "target" :{
+        "outputPath" : "dump.sql"
+    },
     "tables": {
         "users": "WHERE id = 1",
         "carts": "WHERE user_id=1 AND item_id=2"
